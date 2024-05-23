@@ -1,17 +1,21 @@
 import { Provider } from "react-redux";
-import store from "./assets/store/store";
-import Counter from "./Counter";
-
-import Header from "./assets/Component/Header";
-
+import store from "./store/store.js";
+import Counter from "./Counter.jsx";
+import Header from "./Component/Header.jsx";
+import Products from "./Component/Product.jsx";
+import Productdata from "./product.json";
+console.log(Productdata)
 
 function App() {
   return (
     <>
       <Provider store={store}>
         <Header />
-        <Counter/>
-     
+        <Products products={Productdata.products} />
+
+{console.log(Productdata.products)}
+
+        <Counter />
       </Provider>
     </>
   );
