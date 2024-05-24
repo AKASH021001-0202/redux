@@ -25,18 +25,15 @@ const cartReducer = (state = initialState, action) => {
         quantities: { ...state.quantities, [action.product.id]: 1 },
         count: state.count + 1,
       };
+    
       case 'remove_from_cart':
-        const updatedItems = state.cartItems.filter((item) => item.id !== action.id);
-        const removedQuantity = state.quantities[action.id] || 0; 
-        const { [action.id]: removedItemQuantity, ...restQuantities } = state.quantities; 
-        const newCount = state.count - removedQuantity;
-        return {
-          ...state,
-          cartItems: updatedItems,
-          quantities: restQuantities,
-          count: Math.max(0, newCount), 
-        };
-      
+  const updatedItems = state.cartItems.filter((item) => item.id !== action.id);
+  return {
+    ...state,
+    cartItems: updatedItems,
+    quantities: { ...state.quantities }, 
+    count: state.count - (state.quantities[action.id] || 0), 
+  };
     case 'update_quantity':
       const newQuantities = {
         ...state.quantities,
@@ -46,6 +43,8 @@ const cartReducer = (state = initialState, action) => {
         ...state,
         quantities: newQuantities,
       };
+    case 'reset_cart':
+      return initialState; 
     default:
       return state;
   }
