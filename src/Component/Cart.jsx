@@ -1,50 +1,40 @@
 import React from "react";
-
+import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import StarRating from "./StarRating";
 
 const Cart = () => {
-
-
- 
+  const cartItems = useSelector((state) => state.cart.count);
+  const quantities = useSelector((state) => state.cart.cartItems);
+  const dispatch = useDispatch();
+  console.log(cartItems)
 
   const calculateSubtotal = (item) => {
     const quantity = quantities[item.id] || 1;
     return quantity * item.price;
   };
 
-  const subtotal = cartItems.reduce(
-    (acc, item) => acc + calculateSubtotal(item),
-    0
-  );
+  const subtotal = cartItems.reduce((acc, item) => acc + calculateSubtotal(item), 0);
+
+  const handleQuantityChange = (id, quantity) => {
+    dispatch(updateQuantity(id, quantity));
+  };
+
+  const handleRemoveFromCart = (index) => {
+    dispatch(removeFromCart(index));
+  };
 
   return (
     <div>
-      <header className="bg-dark text-white">
-        <div className="container">
-          <div className="header-content ">
-            <h1>Cart</h1>
-            <Link to={"/"}>
-              <button className="btn-cart"> Back</button>
-            </Link>
-          </div>
-        </div>
-      </header>
       <div className="container">
         <div className="row">
-          <div className="col-md-10 mx-auto  p-5 rounded">
+          <div className="col-md-10 mx-auto p-5 rounded">
             {cartItems.length > 0 ? (
               cartItems.map((item, index) => (
-                <div
-                  className="product-box row my-3  p-3 bg-light rounded"
-                  key={index}
-                >
+                <div className="product-box row my-3 p-3 bg-light rounded" key={index}>
                   <div className="col-md-3 d-flex justify-content-center">
-                    <img
-                      className="img-thumbnail"
-                      src={item.thumbnail}
-                      alt=""
-                    />
+                    <img className="img-thumbnail" src={item.thumbnail} alt="" />
                   </div>
                   <div className="col-md-6">
                     <h3>{item.title}</h3>
@@ -54,9 +44,7 @@ const Cart = () => {
                   <div className="col-md-3">
                     <select
                       value={quantities[item.id] || 1}
-                      onChange={(e) =>
-                        handleQuantityChange(item.id, parseInt(e.target.value))
-                      }
+                      onChange={(e) => handleQuantityChange(item.id, parseInt(e.target.value))}
                     >
                       {[...Array(10).keys()].map((num) => (
                         <option key={num + 1} value={num + 1}>
@@ -65,10 +53,7 @@ const Cart = () => {
                       ))}
                     </select>
                     <h6>{item.price}</h6>
-                    <button
-                      onClick={() => removeFromCart(index)}
-                      className="btn btn-danger text-white"
-                    >
+                    <button onClick={() => handleRemoveFromCart(index)} className="btn btn-danger text-white">
                       Remove
                     </button>
                   </div>
@@ -85,7 +70,7 @@ const Cart = () => {
                     />
                   </div>
                   <div className="col-lg-12 dflex-centered">
-                    <Link to={"/"}>
+                    <Link to={"/product"}>
                       <button className="btn btn-primary">Product Page</button>
                     </Link>
                   </div>
