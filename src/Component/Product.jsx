@@ -1,6 +1,9 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 
 const Products = ({ products }) => {
+
+  const dispatch = useDispatch();  
   return (
     <div>
       <div className="container">
@@ -17,6 +20,7 @@ const Products = ({ products }) => {
                   {/* Add additional product information here */}
                   <h6>₹{product.price}</h6>
                   {/* Add buttons or actions here */}
+                 < button className='btn btn-primary' onClick={()=>dispatch( { type : 'add_to_cart' , product: { ...product } })}>ADD To Cart</button>
                 </div>
               </div>
             </div>

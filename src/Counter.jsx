@@ -1,4 +1,4 @@
-import React from 'react'
+/* import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 
 const Counter = () => {
@@ -15,4 +15,4 @@ const Counter = () => {
   )
 }
 
-export default Counter;
+export default Counter; */

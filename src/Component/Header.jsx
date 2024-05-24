@@ -3,7 +3,8 @@ import { useSelector } from "react-redux";
 
 const Header = () => {
 
-    const countReducer = useSelector((state)=>state.countReducer)
+    const cart = useSelector((state)=>state.cartReducer)
+
   return (
     <header className="bg-dark ">
       <div className="container ">
@@ -12,7 +13,7 @@ const Header = () => {
             <h1 className="text-center text-white">React Redux</h1>
           </div>
           <div className="col-lg-4">
-            <button className="btn btn-danger "> Add to cart {countReducer.count}</button>
+            <button className="btn btn-danger "> Add to cart {cart.count}</button>
           </div>
         </div>
       </div>
